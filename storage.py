@@ -1,4 +1,7 @@
-class Storage():
+from abstract import Abstract
+
+
+class Storage(Abstract):
     def __init__(self, items, capacity):
         self._items = items
         self._capacity = capacity
@@ -12,7 +15,7 @@ class Storage():
             raise
 
     def get_free_space(self):
-        return self._capacity - sum(item for item in self._items.values())
+        return self._capacity - sum(self._items.values())
 
     def get_items(self) -> dict:
         return self._items

@@ -3,12 +3,10 @@ from abc import ABC, abstractmethod
 
 class Abstract(ABC):
 
-    @property
     @abstractmethod
-    def remove(self):
+    def remove(self, title, amount):
         pass
 
-    @property
     @abstractmethod
     def get_free_space(self):
         pass

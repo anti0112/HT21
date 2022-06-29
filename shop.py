@@ -8,11 +8,13 @@ class Shop(Storage):
         self.unique = unique
 
     def add(self, name, amount_added):
-        if sum(self._items.values()) < self._capacity:
+        if self.get_free_space() > amount_added:
             if name not in self._items.keys() and len(self._items) <= self.unique:
                 self._items[name] = amount_added
+                return True
             else:
                 self._items[name] += amount_added
+                return True
         else:
-            print('В магазине закончилось место!')
+            return False
 

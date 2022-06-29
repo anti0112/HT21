@@ -1,4 +1,4 @@
-from utils import create_product_store
+from utils import create_product_store, Move
 from store import Store
 from shop import Shop
 
@@ -11,27 +11,20 @@ def main():
 
     if product in all_items_store or all_items_shop:
         amount = int(input('Введите количество: '))
-        print("Доступные варианты: магазин")
+        from_ = input('Откуда забирать: ')
+        print("Доступные варианты: магазин, склад")
         to = input('Куда везем: ')
-        from_ = input('Откуда: ')
+
     else:
         return print("Такого продукта нет")
 
+    move = Move(product, amount, from_, to)
     if to == 'магазин':
-        try:
-            store.remove(product, amount)
-            print(f'\nНужное количество есть в "{from_}"')
-        except Exception as error:
-            print(f"Нужного количества нет на {from_} Ошибка {error}")
-            return ''
-
-        try:
-            shop.add(product, amount)
-            print(f'Курьер забрал {amount} "{product}" из "{from_}" и везет в "{to}"')
-            print(f'Курьер доставил {amount} "{product}" в "{to}"')
-        except Exception as error:
-            print(error)
-            return ''
+        move.find_product_in(store)
+        move.move_product_to(shop)
+    elif to == 'склад':
+        move.find_product_in(shop)
+        move.move_product_to(store)
     else:
         return print(f'Проверьте правильность написания места доставки')
 
@@ -47,6 +40,7 @@ def main():
 
 
 if __name__ == '__main__':
+
     create_product_store()
     store = Store()
     shop = Shop()
