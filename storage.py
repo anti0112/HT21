@@ -1,34 +1,22 @@
-from abc import ABC, abstractmethod
-
-import self as self
-
-
-class Storage(ABC):
+class Storage():
     def __init__(self, items, capacity):
-        self.items = items
-        self.capacity = capacity
+        self._items = items
+        self._capacity = capacity
 
-    @property
-    @abstractmethod
-    def add(self, name, count):
-        pass
+    def remove(self, title, amount):
+        if sum(self._items.values()) > 0 and self._items[title] - amount > 0:
+            self._items[title] -= amount
+        elif self._items[title] - amount == 0:
+            del self._items[title]
+        else:
+            raise
 
-    @property
-    @abstractmethod
-    def remove(self, name, count):
-        pass
-
-    @property
-    @abstractmethod
     def get_free_space(self):
-        pass
+        return self._capacity - sum(item for item in self._items.values())
 
-    @property
-    @abstractmethod
-    def get_items(self):
-        pass
+    def get_items(self) -> dict:
+        return self._items
 
-    @property
-    @abstractmethod
     def get_unique_items_count(self):
-        pass
+        return len(set([item for item in self._items.keys()]))
+        
